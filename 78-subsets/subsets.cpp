@@ -1,25 +1,26 @@
 class Solution {
 public:
 
-int makeSubsets(int i, vector<int> &nums, vector<int> currAnswer, set<vector<int>> &answer)
-{
-    if (i == nums.size())
-    {
-        answer.insert(currAnswer);
-        return 0;
+    void helperSubset(vector<int> nums, int currentIndex, vector<int> levels, vector<vector<int>> &answer){
+
+        
+        if(currentIndex==nums.size()) {
+            answer.push_back(levels);
+            return;
+        }
+        
+        int x = nums[currentIndex];
+        levels.push_back(x);
+        helperSubset(nums, currentIndex+1, levels,answer);
+        levels.pop_back();
+        helperSubset(nums, currentIndex+1, levels, answer);
+
     }
-    makeSubsets(i + 1, nums, currAnswer, answer);
-    currAnswer.push_back(nums[i]);
-    makeSubsets(i + 1, nums, currAnswer, answer);
-
-    return 0;
-}
     vector<vector<int>> subsets(vector<int>& nums) {
-        set<vector<int>> answer;
-    vector<int> currAnswer;
-    makeSubsets(0, nums, currAnswer, answer);
-    vector<vector<int>> solution(answer.begin(), answer.end());
+            vector<vector<int>> answer;
+            vector<int> levels;
+            helperSubset(nums,0, levels, answer);
 
-    return solution;
+            return answer;
     }
 };
