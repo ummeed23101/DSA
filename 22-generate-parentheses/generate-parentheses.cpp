@@ -1,31 +1,25 @@
 class Solution {
 public:
-    int paraHelp(int index, string str, vector<string> &answer, int countOpen, int countClose, int k){
-        
-        if(countClose>countOpen) return 0;
-        if(countOpen>k/2) return 0;
 
-        if(index==k+1){
-            answer.push_back(str);
-            return 0;
-        }
+    void paranthesisHelper(int n, int currentIndex, string current, int numberOfOpening, int numberOfClosing, vector<string> &answer){
 
-        paraHelp(index+1, str+'(',answer, countOpen+1, countClose, k);
-        paraHelp(index+1, str+')',answer, countOpen, countClose+1, k);
+        if(numberOfClosing>numberOfOpening) return;
 
-        return 0;
+        if(numberOfOpening>n/2) return;
+
+        if(currentIndex==n) answer.push_back(current);
+
+        paranthesisHelper(n, currentIndex+1, current+')', numberOfOpening, numberOfClosing+1, answer);
+        paranthesisHelper(n, currentIndex+1, current+'(', numberOfOpening+1, numberOfClosing, answer);
+
+
     }
-
     vector<string> generateParenthesis(int n) {
-        
-        vector<string> answer;  
-        int k = 2*n;
-        string str= "(";
-        int countOpen = 1;
-        int countClose = 0;
-        int index = 2;
-        int x=paraHelp(index, str, answer, countOpen,countClose,k);
+        n = n + n;
+        vector<string> answer;
+        paranthesisHelper(n, 1, "(", 1, 0, answer);
+
 
         return answer;
-    }
+    }   
 };
