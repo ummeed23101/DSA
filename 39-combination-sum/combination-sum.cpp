@@ -1,32 +1,32 @@
 class Solution {
 public:
 
-    void helper(int currentPos, int sum, vector<int> &candidates, int target, vector<int> levels, set<vector<int>> &st, int n){
-        if(currentPos>=n) return;
-        if(sum>target) return;
-
-        if(sum==target){
-            st.insert(levels);
+   void helper(int currentIndex, vector<int> &candidates, int n, int sum, vector<int> levels, vector<vector<int>> &result){
+        if(currentIndex == n || sum<0){
             return;
         }
-
-        levels.push_back(candidates[currentPos]);
-        helper(currentPos+1, sum + candidates[currentPos], candidates, target, levels, st, n);
-        helper(currentPos, sum + candidates[currentPos], candidates, target, levels, st, n);
-
+        if(sum==0){
+            result.push_back(levels);
+            return;
+        }
+        levels.push_back(candidates[currentIndex]);
+        helper(currentIndex, candidates, n, sum - candidates[currentIndex], levels, result);
         levels.pop_back();
-        helper(currentPos+1, sum, candidates, target, levels, st, n);
-    }
+        helper(currentIndex+1, candidates, n, sum, levels, result);
 
+
+    }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        //your code goes here
-        set<vector<int>> st;
-        vector<int> levels;
-        int sum=0;
         int n = candidates.size();
-        helper(0, sum, candidates, target, levels, st, n);
-        vector<vector<int>> result(st.begin(), st.end());
+        int currentIndex = 0;
+
+        int sum = target;
+        vector<int> levels;
+        vector<vector<int>> result;
+        helper(currentIndex, candidates, n, sum, levels, result);
 
         return result;
+
+
     }
 };
