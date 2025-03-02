@@ -1,14 +1,12 @@
 class Solution {
 public:
-   void helper(int currentIndex, int target, int k, vector<int> &levels, vector<vector<int>> &answer, vector<int> &nums) {
-        if (target < 0 || levels.size() > k) return;  
-
+   void helper(int currentIndex, int target, int k, vector<int> levels, vector<vector<int>> &answer, vector<int> &nums) {
         if (target == 0 && levels.size() == k) {
             answer.push_back(levels);
             return;
         }
+        if (target < 0 || levels.size() > k || currentIndex == nums.size()) return;  
 
-        if (currentIndex == nums.size()) return; 
 
         levels.push_back(nums[currentIndex]);
         helper(currentIndex + 1, target - nums[currentIndex], k, levels, answer, nums);
