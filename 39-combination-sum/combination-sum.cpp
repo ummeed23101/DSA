@@ -2,11 +2,11 @@ class Solution {
 public:
     //this is where we are going to process our input and store result
    void helperCombination(int currentIndex, int n, vector<int> &candidates, int target, vector<int> &levels, vector<vector<int>> &result){
-        if(currentIndex ==n || target<0) return;  
-
-        if(currentIndex==n-1 && target==0){
+        if(target==0 && currentIndex==n-1){
             result.push_back(levels);    
         }
+        if(currentIndex ==n || target<0) return;  
+
         levels.push_back(candidates[currentIndex]);
         helperCombination(currentIndex, n, candidates, target-candidates[currentIndex], levels, result);
         levels.pop_back();
