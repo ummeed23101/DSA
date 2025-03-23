@@ -1,29 +1,24 @@
 class Solution {
 public:
 
-    void helperSubsets(int currentPos, vector<int> levels, vector<vector<int>> &result, int n, vector<int> &nums){
-        if(currentPos>n) return;
+    void helperSubsets(vector<int> &nums, vector<int> &levels, int n, vector<vector<int>> &result, int currentIndex){
 
-        if(currentPos==n){
+        if(currentIndex==n){
             result.push_back(levels);
             return;
         }
-        levels.push_back(nums[currentPos]);
-        helperSubsets(currentPos+1, levels, result, n, nums);
+
+        levels.push_back(nums[currentIndex]);
+        helperSubsets(nums, levels, n, result, currentIndex+1);
         levels.pop_back();
-        helperSubsets(currentPos+1, levels, result, n, nums);
-
-
+        helperSubsets(nums, levels, n, result, currentIndex+1);
     }
-
     vector<vector<int>> subsets(vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<int>> result;
         vector<int> levels;
-
-        helperSubsets(0, levels, result, n, nums);
+        vector<vector<int>> result;
+        int n = nums.size();
+        helperSubsets(nums, levels,n, result, 0);
 
         return result;
-
     }
 };
